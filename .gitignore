@@ -1,0 +1,27 @@
+New-Item -Path .gitignore -ItemType File -Value @"
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+
+# Environments
+odoo-env/
+.env
+venv/
+
+# Odoo specific
+*.db
+*.log
+odoo-bin
+odoo.conf
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Local addons cache
+/custom_addons/*/__pycache__/
+"@
