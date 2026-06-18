@@ -1,4 +1,6 @@
 from odoo import api, fields, models, _
+from odoo.exceptions import ValidationError
+from datetime import date
 
 
 class HelpDeskTicket(models.Model):
@@ -24,3 +26,24 @@ class HelpDeskTicket(models.Model):
                                    help='Support agent responsible for this ticket')
     days_open = fields.Integer(string='Days Open', compute="_comput_days_open")
     active = fields.Boolean(default=True, help='Set to False to archive the ticket')
+
+    @api.depends('state', 'write_date')
+    def _compute_days_open(self):
+        for ticket in self:
+            if ticket.state in ('done', 'closed'):
+                ticket.days_open = 0
+            elif ticket.create_date:
+                delta = date.today() - ticket.create_date.date()
+                ticket.days_open = delta.days
+            else:
+                ticket.days_open = 0
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('ticket_number', _('New')) == _('New'):
+                vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
+        return super().create(vals_list)
+
+    
+    
