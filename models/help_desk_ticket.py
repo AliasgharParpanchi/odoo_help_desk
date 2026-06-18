@@ -41,8 +41,7 @@ class HelpDeskTicket(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
-            if vals.get('ticket_number', _('New')) == _('New'):
-                vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
+            vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
         return super().create(vals_list)
 
     #Action buttons to change status
