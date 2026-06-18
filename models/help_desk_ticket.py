@@ -45,5 +45,15 @@ class HelpDeskTicket(models.Model):
                 vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
         return super().create(vals_list)
 
-    
+    #Action buttons to change status
+    def action_new(self):
+        self.state = 'new'
+    def action_progress(self):
+        self.state = 'in_progress'
+
+    def action_done(self):
+        self.state = 'done'
+
+    def action_close(self):
+        self.state = 'closed'
     
