@@ -11,25 +11,26 @@ class HelpDeskTicket(models.Model):
     title = fields.Char(string="Title", size=100,
                         help="Brief title of the ticket", required=True, translate=True)
     ticket_number = fields.Char(string="Tickt Code",help="Unique ticket code (auto-generated)", 
-                                required=True, readonly=True, copy=False)
-    problem_description = fields.Char(string="Description", 
+                                readonly=True, copy=False)
+    problem_description = fields.Char(string="Description", translate=True,
                                       help="Full description of the problem", required=True)
-    solution = fields.Char(string="Solution", help="Solution provided by support agent")
+    solution = fields.Char(string="Solution",translate=True,
+                           help="Solution provided by support agent")
     priority = fields.Selection(selection=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')],
-                                string="Priority", default='medium', required=True, translate=True)
+                                string="Priority", default='medium', required=True)
     state = fields.Selection(selection=[('new', 'New'), ('in_progress', 'Progress'), ('done', 'Done'),
                                         ('closed', 'Closed'),], string="Status",
-                            default='new', required=True, translate=True)
+                            default='new', required=True)
     customer_id = fields.Many2one('res.partner', string="Customer Name", required=True,
                                   help='The customer who reported the issue')
     assignee_id = fields.Many2many('res.users', string="Assigned To", 
                                    help='Support agent responsible for this ticket')
-    days_open = fields.Integer(string='Days Open', compute="_comput_days_open")
+    days_open = fields.Integer(string='Days Open', compute="_compute_days_open")
     active = fields.Boolean(default=True, help='Set to False to archive the ticket')
 
-    @api.depends('state', 'write_date')
+    @api.depends('state')
     def _compute_days_open(self):
-        for ticket in self:
+        for ticket in self: 
             if ticket.state in ('done', 'closed'):
                 ticket.days_open = 0
             elif ticket.create_date:
