@@ -6,7 +6,8 @@
     'category': 'Services/Helpdesk',
     'summary': "Helpdesk ticketing with priorities, assignments, and PDF reports",
     'data':[
-        'data/help_desk_ticket.xml'
+        'data/help_desk_ticket.xml',
+        'security/ir.model.access.csv'
     ],
     'installable': True,
     'application': True,

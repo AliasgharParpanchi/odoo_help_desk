@@ -1,0 +1,2 @@
+id,name,model_id,group_id,perm_read,perm_write,perm_create,perm_unlink
+access_help_desk_ticket_admin,access_help_desk_ticket_admin,model_help_desk_ticket,base.group_system,1,1,1,1
