@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<odoo noupdate="1">
     <record id="seq_help_desk_ticket" model="ir.sequence">
         <field name="name">Help Desk Ticket</field>
         <field name="code">help.desk.ticket</field>
