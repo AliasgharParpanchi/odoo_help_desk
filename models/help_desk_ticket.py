@@ -20,7 +20,7 @@ class HelpDeskTicket(models.Model):
                                 string="Priority", default='medium', required=True)
     state = fields.Selection(selection=[('new', 'New'), ('in_progress', 'Progress'), ('done', 'Done'),
                                         ('closed', 'Closed'),], string="Status",
-                            default='new', required=True)
+                            default='new', required=True, group_expand="_group_expand_state")
     customer_id = fields.Many2one('res.partner', string="Customer Name", required=True,
                                   help='The customer who reported the issue')
     assignee_id = fields.Many2many('res.users', string="Assigned To", 
@@ -56,4 +56,15 @@ class HelpDeskTicket(models.Model):
 
     def action_close(self):
         self.state = 'closed'
+
+    @api.model
+    def _group_expand_state(self, stages, domain):
+        desired_order = ['new', 'in_progress', 'done', 'closed']
+        all_states = dict(self._fields['state'].selection).keys()
+        
+        result = []
+        for state in desired_order:
+            if state in all_states:
+                result.append(state)
+        return result
     
