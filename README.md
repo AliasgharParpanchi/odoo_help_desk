@@ -88,11 +88,5 @@ For issues or suggestions, please open an issue on [GitHub](https://github.com/A
 
 ## Author / نویسنده
 
-**Your Name**  
+**Aliasghar Parpanchi**  
 [GitHub](https://github.com/AliasgharParpanchi) | [LinkedIn](https://linkedin.com/in/yourprofile)
-
----
-
-## License / مجوز
-
-LGPL-3 – See [LICENSE](LICENSE) for details.
