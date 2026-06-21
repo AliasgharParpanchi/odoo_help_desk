@@ -89,4 +89,4 @@ For issues or suggestions, please open an issue on [GitHub](https://github.com/A
 ## Author / نویسنده
 
 **Aliasghar Parpanchi**  
-[GitHub](https://github.com/AliasgharParpanchi) | [LinkedIn](https://linkedin.com/in/yourprofile)
+[GitHub](https://github.com/AliasgharParpanchi) | [LinkedIn](https://www.linkedin.com/in/aliasghar-parpanchi-74b302206)
