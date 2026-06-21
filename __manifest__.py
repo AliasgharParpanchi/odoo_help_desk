@@ -11,6 +11,11 @@
         'views/help_desk_ticket.xml',
         'views/menu.xml'
     ],
+    'assets': {
+        'web.assets_backend': [
+            'odoo_help_desk/static/src/css/ticket.css'
+        ]
+    },   
     'installable': True,
     'application': True,
 }

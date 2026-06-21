@@ -48,7 +48,7 @@
         <field name="model">help.desk.ticket</field>
         <field name="priority" eval="1"/>
         <field name="arch" type="xml">
-            <kanban class="o_kanban_mobile" sample="1" default_group_by="state">
+            <kanban class="o_kanban_mobile ticket_kanban" sample="1" default_group_by="state">
                 <progressbar field="priority" colors='{"low": "success", "medium": "warning", "high": "danger"}'/>
                 <templates>
                     <t t-name="card">

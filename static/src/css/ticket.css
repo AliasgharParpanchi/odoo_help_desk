@@ -1,0 +1,31 @@
+
+.ticket_kanban .o_content .o_kanban_group:nth-of-type(1) .o_column_title {
+    background: linear-gradient(-228deg, #0f5f91 0%, #12a2bf 50%, #52c2a0 100%) !important;
+    color: white !important;    
+}
+
+.ticket_kanban .o_content .o_kanban_group:nth-of-type(2) .o_column_title {
+    background: linear-gradient(195deg, #ff9d00 0%, #ffc400 50%, #e0ff65 100%) !important;
+    color: white !important;    
+}
+
+.ticket_kanban .o_content .o_kanban_group:nth-of-type(3) .o_column_title {
+    background: linear-gradient(-356deg, #9f8899 0%, #5e6f7e 50%, #04976b 100%) !important;
+    color: white !important;    
+}
+
+.ticket_kanban .o_content .o_kanban_group:nth-of-type(4) .o_column_title {
+    background: linear-gradient(-228deg, #c5c5c5 0%, #b2b500 50%, #dc0000 100%) !important;
+    color: white !important;    
+}
+
+.ticket_kanban .o_content .o_kanban_group{
+    max-width: 260px !important;
+    min-width: 240px !important;
+}
+
+.ticket_kanban .o_content .o_column_title{
+    border-radius: 5px;
+    display: block !important;
+    text-align: center !important;
+}
