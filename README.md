@@ -1,4 +1,5 @@
 # Help Desk / میز کمک
+# not complete / تکمیل نشده
 
 <!-- [![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)]()
 [![Odoo](https://img.shields.io/badge/Odoo-17.0%20%7C%2018.0%20%7C%2019.0-green.svg)]()
