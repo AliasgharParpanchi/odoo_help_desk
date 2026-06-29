@@ -12,9 +12,9 @@ class HelpDeskTicket(models.Model):
                         help="Brief title of the ticket", required=True, translate=True)
     ticket_number = fields.Char(string="Tickt Code",help="Unique ticket code (auto-generated)", 
                                 readonly=True, copy=False)
-    problem_description = fields.Char(string="Description", translate=True,
+    problem_description = fields.Text(string="Description", translate=True,
                                       help="Full description of the problem", required=True)
-    solution = fields.Char(string="Solution",translate=True,
+    solution = fields.Text(string="Solution",translate=True,
                            help="Solution provided by support agent")
     priority = fields.Selection(selection=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')],
                                 string="Priority", default='medium', required=True)
@@ -23,8 +23,9 @@ class HelpDeskTicket(models.Model):
                             default='new', required=True, group_expand="_group_expand_state")
     customer_id = fields.Many2one('res.partner', string="Customer Name", required=True,
                                   help='The customer who reported the issue')
-    assignee_id = fields.Many2many('res.users', string="Assigned To", 
-                                   help='Support agent responsible for this ticket')
+    assignee_id = fields.Many2one('res.users', string="Assigned To", 
+                                   help='Support agent responsible for this ticket',
+                                   domain="[('share', '=', False)]")
     days_open = fields.Integer(string='Days Open', compute="_compute_days_open")
     active = fields.Boolean(default=True, help='Set to False to archive the ticket')
 
