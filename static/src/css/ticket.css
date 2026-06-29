@@ -29,3 +29,28 @@
     display: block !important;
     text-align: center !important;
 }
+
+.ticket_kanban .o_content .o_kanban_group .o_kanban_record {
+    margin-bottom: 5px;  
+}
+
+.border_bottom_priority_Low{
+    border-bottom-color: rgb(40, 167, 69) !important;
+}
+
+.border_bottom_priority_Medium{
+    border-bottom-color: rgb(255, 172, 0) !important;
+}
+
+.border_bottom_priority_High{
+    border-bottom-color: rgb(220, 53, 69) !important;
+}
+
+
+.text-line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
