@@ -59,8 +59,8 @@
                 <field name="problem_description"/>
                 <progressbar field="priority" colors='{"low": "success", "medium": "warning", "high": "danger"}'/>
                 <templates>
-                    <t t-name="card">
-                        <div class="oe_kanban_global_click o_kanban_record o_kanban_ghost p-1 m-1">
+                    <t t-name="card" class="o_kanban_ghost">
+                        <div class="oe_kanban_global_click o_kanban_record o_kanban_ghost p-2 ps-3 ">
                             <div class="o_kanban_record_top"  t-att-class="'border_bottom_priority_' + record.priority.value" style="border-bottom: 2px solid">
                                 <div class="o_kanban_record_headings d-flex">
                                     <strong t-esc="'Title'" style="flex:1;"/> <span t-esc="':'" style="flex:0.2;"/> <span t-esc="record.title.value" style="flex:1.5;"/>
