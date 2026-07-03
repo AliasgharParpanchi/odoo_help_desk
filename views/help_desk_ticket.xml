@@ -12,7 +12,7 @@
                         <field name="ticket_number"/>
                         <field name="problem_description"/>
                         <field name="customer_id"/>
-                        <field name="assignee_id" />
+                        <field name="assignee_id" required="state not in ['new', 'closed']"/>
                     </group>
                     <group>
                         <field name="solution"/>
