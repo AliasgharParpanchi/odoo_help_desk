@@ -16,16 +16,16 @@
                         <group>
                             <field name="title"/>
                             <field name="ticket_number"/>
-                            <field name="problem_description"/>
                             <field name="customer_id"/>
                             <field name="assignee_id" required="state not in ['new', 'closed']"/>
+                            <field name="problem_description"/>
                         </group>
                         <group>
-                            <field name="solution" required="state == 'done'"/>
                             <field name="priority"/>
                             <field name="state"/>
                             <field name="days_open"/>
                             <field name="active"/>
+                            <field name="solution" required="state == 'done'"/>
                         </group>
                     </group>
                 </sheet>
