@@ -33,14 +33,14 @@
 
 /* ستون سوم (Done) - بنفش-سبز */
 .ticket_kanban .o_content .o_kanban_group:nth-of-type(3) .o_kanban_record {
-    background: linear-gradient(-356deg, rgba(159, 136, 153, 0.75) 0%, rgba(94, 111, 126, 0.75) 50%, rgba(4, 151, 107, 0.75) 100%) !important;
-    color: white !important;
+    background: linear-gradient(-30deg, rgba(185, 163, 180, 0.75) 0%, rgba(118, 140, 160, 0.75) 50%, rgba(4, 151, 107, 0.75) 100%) !important;
+    color: black !important;
 }
 
 /* ستون چهارم (Closed) - خاکستری-قرمز */
 .ticket_kanban .o_content .o_kanban_group:nth-of-type(4) .o_kanban_record {
-    background: linear-gradient(-228deg, rgba(197, 197, 197, 0.75) 0%, rgba(178, 181, 0, 0.75) 50%, rgba(220, 0, 0, 0.75) 100%) !important;
-    color: white !important;
+    background: linear-gradient(-30deg, rgba(200, 139, 139, 0.75) 0%, rgba(255, 120, 0, 0.5) 50%, rgba(255, 0, 0, 0.47) 100%) !important;
+    color: black !important;
 }
 
 .ticket_kanban .o_content .o_kanban_group{
