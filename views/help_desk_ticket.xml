@@ -6,22 +6,29 @@
         <field name="model">help.desk.ticket</field>
         <field name="arch" type="xml">
             <form string="Ticket">
-                <group>
+                <header>
+                    <field name="state" widget="statusbar" 
+                       statusbar_visible="new,in_progress,done,closed" 
+                       options="{'clickable' : '1'}" readonly="0"/>
+                </header>
+                <sheet>
                     <group>
-                        <field name="title"/>
-                        <field name="ticket_number"/>
-                        <field name="problem_description"/>
-                        <field name="customer_id"/>
-                        <field name="assignee_id" required="state not in ['new', 'closed']"/>
+                        <group>
+                            <field name="title"/>
+                            <field name="ticket_number"/>
+                            <field name="problem_description"/>
+                            <field name="customer_id"/>
+                            <field name="assignee_id" required="state not in ['new', 'closed']"/>
+                        </group>
+                        <group>
+                            <field name="solution" required="state == 'done'"/>
+                            <field name="priority"/>
+                            <field name="state"/>
+                            <field name="days_open"/>
+                            <field name="active"/>
+                        </group>
                     </group>
-                    <group>
-                        <field name="solution" required="state == 'done'"/>
-                        <field name="priority"/>
-                        <field name="state"/>
-                        <field name="days_open"/>
-                        <field name="active"/>
-                    </group>
-                </group>
+                </sheet>
             </form>
         </field>
     </record>  
