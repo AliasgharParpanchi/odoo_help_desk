@@ -96,6 +96,23 @@ class HelpDeskTicket(models.Model):
         for vals in vals_list:
             vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
         return super().create(vals_list)
+    
+    ## ==================
+    ## Validations
+    ## ==================
+
+    @api.constrains('state', 'solution')
+    def _check_solution_on_done(self):
+        for ticket in self:
+            if ticket.state == 'done' and not ticket.solution:
+                raise ValidationError(_('You cannot mark a ticket as Done without providing a solution.'))
+            
+    @api.constrains('state', 'assignee_id')
+    def _check_assignee_id_on_progess_done(self):
+        for ticket in self:
+            if ticket.state not in ['new', 'closed'] and not ticket.assignee_id:
+                raise ValidationError(_('To change this record to this status, you must assign it to a user.'))
+
 
 
 
