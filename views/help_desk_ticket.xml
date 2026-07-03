@@ -28,6 +28,11 @@
                             <field name="solution" required="state == 'done'"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Notes" name="internal_notes">
+                            <field name="notes" placeholder="Add a note..." options="{'collaborative': true}" />
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>

@@ -28,6 +28,7 @@ class HelpDeskTicket(models.Model):
                                    domain="[('share', '=', False)]")
     days_open = fields.Integer(string='Days Open', compute="_compute_days_open")
     active = fields.Boolean(default=True, help='Set to False to archive the ticket')
+    notes = fields.Html('Notes')
 
     @api.depends('state')
     def _compute_days_open(self):
