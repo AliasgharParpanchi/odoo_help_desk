@@ -30,17 +30,29 @@ class HelpDeskTicket(models.Model):
     days_open = fields.Integer(string='Days Open', compute="_compute_days_open")
     active = fields.Boolean(default=True, help='Set to False to archive the ticket',tracking=7)
     notes = fields.Html('Notes')
+    close_date = fields.Datetime(
+        string="Close Date",
+        help="Date and time when ticket was closed",
+        readonly=True,
+        copy=False
+    )
 
-    @api.depends('state')
+    @api.depends('state', 'create_date', 'close_date')
     def _compute_days_open(self):
-        for ticket in self: 
+        for ticket in self:
             if ticket.state in ('done', 'closed'):
-                ticket.days_open = 0
-            elif ticket.create_date:
-                delta = date.today() - ticket.create_date.date()
-                ticket.days_open = delta.days
+                # Closed ticket: Use close_date
+                if ticket.close_date:
+                    delta = ticket.close_date - ticket.create_date
+                    ticket.days_open = delta.days
+                else:
+                    # If close_date is empty (due to an error), use the present tense
+                    delta = fields.Datetime.now() - ticket.create_date
+                    ticket.days_open = delta.days
             else:
-                ticket.days_open = 0
+                # Open ticket: Calculate from the present time
+                delta = fields.Datetime.now() - ticket.create_date
+                ticket.days_open = delta.days
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -48,17 +60,6 @@ class HelpDeskTicket(models.Model):
             vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
         return super().create(vals_list)
 
-    #Action buttons to change status
-    def action_new(self):
-        self.state = 'new'
-    def action_progress(self):
-        self.state = 'in_progress'
-
-    def action_done(self):
-        self.state = 'done'
-
-    def action_close(self):
-        self.state = 'closed'
 
     @api.model
     def _group_expand_state(self, stages, domain):
