@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem name="Help Desk"
+            id="help_desk_custom"
+            >
+        <menuitem name="Ticket"
+            id="help_desk_Ticket"
+            action="action_help_desk_ticket"
+            />
+    </menuitem>
+</odoo>

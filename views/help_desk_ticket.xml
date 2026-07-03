@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- فرم (Form View) -->
+    <record id="view_help_desk_ticket_form" model="ir.ui.view">
+        <field name="name">help.desk.ticket.form</field>
+        <field name="model">help.desk.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket">
+                <header>
+                    <field name="state" widget="statusbar" 
+                       statusbar_visible="new,in_progress,done,closed" 
+                       options="{'clickable' : '1'}" readonly="0"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="title"/>
+                            <field name="ticket_number"/>
+                            <field name="customer_id"/>
+                            <field name="assignee_id" required="state not in ['new', 'closed']"/>
+                            <field name="problem_description"/>
+                        </group>
+                        <group>
+                            <field name="priority"/>
+                            <field name="state"/>
+                            <field name="days_open"/>
+                            <field name="active"/>
+                            <field name="solution" required="state == 'done'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="internal_notes">
+                            <field name="notes" placeholder="Add a note..." options="{'collaborative': true}" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>  
+
+    <!-- لیست (Tree/List View) -->
+    <record id="view_help_desk_ticket_list" model="ir.ui.view">
+        <field name="name">help.desk.ticket.list</field>
+        <field name="model">help.desk.ticket</field>
+        <field name="arch" type="xml">
+            <list create="1" delete="1" multi_edit="1" string="Ticket List">
+                <field name="ticket_number"/>
+                <field name="title"/>
+                <field name="customer_id"/>
+                <field name="assignee_id"/>
+                <field name="state"/>
+                <field name="priority"/>
+                <field name="problem_description"/>
+            </list>
+        </field> 
+    </record>
+
+    <record id="view_help_desk_ticket_kanban" model="ir.ui.view">
+        <field name="name">help.desk.ticket.kanban</field>
+        <field name="model">help.desk.ticket</field>
+        <field name="priority" eval="1"/>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile ticket_kanban" sample="1" default_group_by="state">
+                <field name="title"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <field name="customer_id"/>
+                <field name="assignee_id"/>
+                <field name="days_open"/>
+                <field name="solution"/>
+                <field name="problem_description"/>
+                <progressbar field="priority" colors='{"low": "success", "medium": "warning", "high": "danger"}'/>
+                <templates>
+                    <t t-name="card" class="o_kanban_ghost">
+                        <div class="oe_kanban_global_click o_kanban_record o_kanban_ghost p-2 ps-3 ">
+                            <div class="o_kanban_record_top"  t-att-class="'border_bottom_priority_' + record.priority.value" style="border-bottom: 2px solid">
+                                <div class="o_kanban_record_headings d-flex">
+                                    <strong t-esc="'Title'" style="flex:1;"/> <span t-esc="':'" style="flex:0.2;"/> <span t-esc="record.title.value" style="flex:1.5;"/>
+                                </div>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <div class="d-flex"><span t-esc="'Days Open'" style="flex:1;"/> <span t-esc="':'" style="flex:0.2;"/> <span t-esc="record.days_open.value" style="flex:1.5;"/></div>
+                                <div class="d-flex"><span t-esc="'Customer'" style="flex:1;"/> <span t-esc="':'" style="flex:0.2;"/> <span t-esc="record.customer_id.value" style="flex:1.5;"/></div>
+                                <div class="text-line-clamp-1"><span t-esc="'Description'"/> : <span t-esc="record.problem_description.value" t-att-title="record.problem_description.value" /></div>
+                                <div t-if="record.solution.value" class="text-line-clamp-1">
+                                    <span t-esc="'Solution'"/> : <span t-esc="record.solution.value" t-att-title="record.solution.value"/>
+                                </div>
+                                <div>
+                                    <field name="assignee_id" widget="many2one_avatar_user" areadonly="recurrency" optional="hide" class="ms-auto"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+        
+
+    <!-- اکشن پنجره (Action) -->
+    <record id="action_help_desk_ticket" model="ir.actions.act_window">
+        <field name="name">Ticket</field>
+        <field name="res_model">help.desk.ticket</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>   <!-- ✅ اینجا حتماً /record باشد -->
+</odoo>
