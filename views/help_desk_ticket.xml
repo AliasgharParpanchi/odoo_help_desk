@@ -15,7 +15,7 @@
                         <field name="assignee_id" required="state not in ['new', 'closed']"/>
                     </group>
                     <group>
-                        <field name="solution"/>
+                        <field name="solution" required="state == 'done'"/>
                         <field name="priority"/>
                         <field name="state"/>
                         <field name="days_open"/>
