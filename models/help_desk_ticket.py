@@ -7,27 +7,28 @@ class HelpDeskTicket(models.Model):
     _name = 'help.desk.ticket'
     _description = 'Help Desk Ticket'
     _rec_name = 'title'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    title = fields.Char(string="Title", size=100,
+    title = fields.Char(string="Title", size=100, tracking=4,
                         help="Brief title of the ticket", required=True, translate=True)
     ticket_number = fields.Char(string="Tickt Code",help="Unique ticket code (auto-generated)", 
                                 readonly=True, copy=False)
-    problem_description = fields.Text(string="Description", translate=True,
+    problem_description = fields.Text(string="Description", translate=True,tracking=2,
                                       help="Full description of the problem", required=True)
-    solution = fields.Text(string="Solution",translate=True,
+    solution = fields.Text(string="Solution",translate=True,tracking=3,
                            help="Solution provided by support agent")
     priority = fields.Selection(selection=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High')],
-                                string="Priority", default='medium', required=True)
+                                string="Priority", default='medium', required=True, tracking=8)
     state = fields.Selection(selection=[('new', 'New'), ('in_progress', 'Progress'), ('done', 'Done'),
-                                        ('closed', 'Closed'),], string="Status",
+                                        ('closed', 'Closed'),], string="Status", tracking=1,
                             default='new', required=True, group_expand="_group_expand_state")
     customer_id = fields.Many2one('res.partner', string="Customer Name", required=True,
-                                  help='The customer who reported the issue')
+                                  help='The customer who reported the issue', tracking=6)
     assignee_id = fields.Many2one('res.users', string="Assigned To", 
                                    help='Support agent responsible for this ticket',
-                                   domain="[('share', '=', False)]")
+                                   domain="[('share', '=', False)]", tracking=5)
     days_open = fields.Integer(string='Days Open', compute="_compute_days_open")
-    active = fields.Boolean(default=True, help='Set to False to archive the ticket')
+    active = fields.Boolean(default=True, help='Set to False to archive the ticket',tracking=7)
     notes = fields.Html('Notes')
 
     @api.depends('state')
