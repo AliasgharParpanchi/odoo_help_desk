@@ -37,6 +37,11 @@ class HelpDeskTicket(models.Model):
         copy=False
     )
 
+
+    ## =================================
+    ## Computational methods
+    ## =================================
+
     @api.depends('state', 'create_date', 'close_date')
     def _compute_days_open(self):
         for ticket in self:
@@ -53,13 +58,11 @@ class HelpDeskTicket(models.Model):
                 # Open ticket: Calculate from the present time
                 delta = fields.Datetime.now() - ticket.create_date
                 ticket.days_open = delta.days
+    
 
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
-        return super().create(vals_list)
-
+    ## ==========================
+    ## Grouping methods
+    ## ==========================
 
     @api.model
     def _group_expand_state(self, stages, domain):
@@ -71,4 +74,29 @@ class HelpDeskTicket(models.Model):
             if state in all_states:
                 result.append(state)
         return result
+
+    ## =========================
+    ## Write and create methods
+    ## =========================
+
+    def write(self, vals):
+        """Save close_date when the ticket is closed."""
+        for ticket in self:
+            old_state = ticket.state
+            result = super(HelpDeskTicket, self).write(vals)
+            
+            # اگر وضعیت به done یا closed تغییر کرده و قبلاً بسته نبوده
+            if 'state' in vals and vals['state'] in ('done', 'closed') and old_state not in ('done', 'closed'):
+                ticket.close_date = fields.Datetime.now()
+                
+        return result
+    
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            vals['ticket_number'] = self.env['ir.sequence'].next_by_code('help.desk.ticket') or _('New')
+        return super().create(vals_list)
+
+
+
     
