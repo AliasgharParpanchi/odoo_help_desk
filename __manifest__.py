@@ -6,6 +6,7 @@
     'category': 'Services/Helpdesk',
     'summary': "Helpdesk ticketing with priorities, assignments, and PDF reports",
     'data':[
+        'security/odoo_helpdesk_security.xml',
         'security/ir.model.access.csv',
         'data/help_desk_ticket.xml',
         'views/help_desk_ticket.xml',
