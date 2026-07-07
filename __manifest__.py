@@ -10,6 +10,7 @@
         'security/ir.model.access.csv',
         'data/help_desk_ticket.xml',
         'views/help_desk_ticket.xml',
+        'views/res_users_inheritance_views.xml',
         'views/menu.xml'
     ],
     'assets': {
