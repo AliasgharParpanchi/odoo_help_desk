@@ -36,4 +36,70 @@
         <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
+    <!-- قوانین رکورد (Record Rules) -->
+    <data noupdate="1">
+
+
+        <!-- قانون: اپراتور فقط تیکت های خودش یا جدید را می بیند -->
+        <record model="ir.rule" id="rule_helpdesk_agent_own_or_new">
+            <field name="name">Agent: Own or New Tickets</field>
+            <field name="model_id" ref="model_help_desk_ticket"/>
+            <field name="domain_force">['|', ('assignee_id', '=', user.id), ('state', '=', 'new')]</field>
+            <field name="groups" eval="[(4, ref('group_helpdesk_agent'))]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- قانون: اپراتور فقط روی تیکت های باز می تواند بنویسد -->
+        <record model="ir.rule" id="rule_helpdesk_agent_only_open">
+            <field name="name">Agent: Only Open Tickets</field>
+            <field name="model_id" ref="model_help_desk_ticket"/>
+            <field name="domain_force">[('state', 'not in', ['done', 'closed'])]</field>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('group_helpdesk_agent'))]"/>
+        </record>
+
+        <!-- قانون سرپرست: تیکت های خودش و زیردستان -->
+        <record model="ir.rule" id="rule_helpdesk_supervisor_subordinates">
+            <field name="name">Supervisor: Own + Subordinates Tickets</field>
+            <field name="model_id" ref="model_help_desk_ticket"/>
+            <field name="domain_force">['|', ('assignee_id', 'in', user.subordinate_ids.ids), ('assignee_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('group_helpdesk_supervisor'))]"/>
+        </record>
+
+        <!-- قانون: مدیر همه تیکت ها را می بیند -->
+        <record model="ir.rule" id="rule_helpdesk_manager_all">
+            <field name="name">Manager: All Tickets</field>
+            <field name="model_id" ref="model_help_desk_ticket"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="groups" eval="[(4, ref('group_helpdesk_manager'))]"/>
+        </record>
+
+        <!-- قانون: مدیر سیستم دسترسی کامل دارد -->
+        <record model="ir.rule" id="rule_helpdesk_admin_full">
+            <field name="name">Admin: Full Access</field>
+            <field name="model_id" ref="model_help_desk_ticket"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+
+    </data>
+
 </odoo>
